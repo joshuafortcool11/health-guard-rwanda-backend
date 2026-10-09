@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import rwanda.healthguard.domain.EnrollmentOfficer;
@@ -81,5 +82,12 @@ public class EnrollmentOfficerController {
         }
 
         return ApiResponses.fromMessage(returnedMessage, HttpStatus.OK);
+    }
+
+    // C1: enrollment officers who hold that household category, matched ignoring letter case
+    @GetMapping(value = "/api/enrollment-officers/by-household-category", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<EnrollmentOfficer>> getEnrollmentOfficersByHouseholdCategory(@RequestParam String name) {
+
+        return new ResponseEntity<>(enrollmentOfficerService.getEnrollmentOfficersByHouseholdCategory(name), HttpStatus.OK);
     }
 }

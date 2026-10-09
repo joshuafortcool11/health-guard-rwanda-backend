@@ -82,4 +82,11 @@ public class HouseholdCategoryController {
 
         return ApiResponses.fromMessage(returnedMessage, HttpStatus.OK);
     }
+
+    // C3: every household category that no enrollment officer holds
+    @GetMapping(value = "/api/household-categories/unused", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<HouseholdCategory>> getUnusedHouseholdCategories() {
+
+        return new ResponseEntity<>(householdCategoryService.getUnusedHouseholdCategories(), HttpStatus.OK);
+    }
 }

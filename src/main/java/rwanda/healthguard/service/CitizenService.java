@@ -10,12 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rwanda.healthguard.domain.Citizen;
 import rwanda.healthguard.repository.CitizenRepository;
+import rwanda.healthguard.repository.EnrollmentRepository;
 
 @Service
 public class CitizenService {
 
     @Autowired
     private CitizenRepository citizenRepository;
+
+    @Autowired
+    private EnrollmentRepository enrollmentRepository;
 
     @Transactional
     public String saveCitizen(Citizen citizen) {
@@ -69,5 +73,17 @@ public class CitizenService {
     public List<Citizen> getAllCitizens() {
 
         return citizenRepository.findAll();
+    }
+
+    // B1: derived query, village matched ignoring case, ordered by lastName A to Z
+    public List<Citizen> getCitizensByVillage(String village) {
+
+        return citizenRepository.findByVillageIgnoreCaseOrderByLastNameAsc(village);
+    }
+
+    // C4: JPQL, every citizen that has an enrollment with that enrollment officer, listed once
+    public List<Citizen> getCitizensOfEnrollmentOfficer(UUID enrollmentOfficerId) {
+
+        return enrollmentRepository.findCitizensOfEnrollmentOfficer(enrollmentOfficerId);
     }
 }

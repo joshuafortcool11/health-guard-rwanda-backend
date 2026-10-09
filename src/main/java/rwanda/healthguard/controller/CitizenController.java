@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import rwanda.healthguard.domain.Citizen;
 import rwanda.healthguard.service.CitizenService;
+import rwanda.healthguard.service.EnrollmentOfficerService;
 import rwanda.healthguard.util.ApiResponses;
 
 @RestController
@@ -25,6 +27,9 @@ public class CitizenController {
 
     @Autowired
     private CitizenService citizenService;
+
+    @Autowired
+    private EnrollmentOfficerService enrollmentOfficerService;
 
     @PostMapping(value = "/api/citizens/save", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -80,5 +85,24 @@ public class CitizenController {
         }
 
         return ApiResponses.fromMessage(returnedMessage, HttpStatus.OK);
+    }
+
+    // B1: find citizens by village, letter case does not matter, sorted by lastName A to Z
+    @GetMapping(value = "/api/citizens/by-village", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Citizen>> getCitizensByVillage(@RequestParam String village) {
+
+        return new ResponseEntity<>(citizenService.getCitizensByVillage(village), HttpStatus.OK);
+    }
+
+    // C4: each citizen that has at least one enrollment with that enrollment officer, listed once
+    @GetMapping(value = "/api/citizens/of-enrollment-officer/{enrollmentOfficerId}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getCitizensOfEnrollmentOfficer(@PathVariable UUID enrollmentOfficerId) {
+
+        if (enrollmentOfficerService.getEnrollmentOfficerById(enrollmentOfficerId).isEmpty()) {
+            return ApiResponses.fromMessage("The enrollment officer with that id does not exist", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(citizenService.getCitizensOfEnrollmentOfficer(enrollmentOfficerId), HttpStatus.OK);
     }
 }

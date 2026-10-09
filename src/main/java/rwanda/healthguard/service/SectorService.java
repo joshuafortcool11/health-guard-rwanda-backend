@@ -67,4 +67,10 @@ public class SectorService {
 
         return sectorRepository.findAll();
     }
+
+    // C2: JPQL, every sector that no enrollment officer occupies
+    public List<Sector> getFreeSectors() {
+
+        return sectorRepository.findFreeSectors();
+    }
 }

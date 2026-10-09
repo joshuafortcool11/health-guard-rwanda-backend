@@ -1,5 +1,6 @@
 package rwanda.healthguard.repository;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,4 +10,6 @@ import rwanda.healthguard.domain.Citizen;
 
 @Repository
 public interface CitizenRepository extends JpaRepository<Citizen, UUID> {
+
+    List<Citizen> findByVillageIgnoreCaseOrderByLastNameAsc(String village);
 }

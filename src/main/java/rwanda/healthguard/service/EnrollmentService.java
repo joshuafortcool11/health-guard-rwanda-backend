@@ -1,5 +1,6 @@
 package rwanda.healthguard.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -78,5 +79,17 @@ public class EnrollmentService {
     public List<Enrollment> getAllEnrollments() {
 
         return enrollmentRepository.findAll();
+    }
+
+    // B2: derived query, earliest enrollmentDate first
+    public List<Enrollment> getEnrollmentsByStatus(EnrollmentStatus status) {
+
+        return enrollmentRepository.findByStatusOrderByEnrollmentDateAsc(status);
+    }
+
+    // B3: derived query, both dates inclusive, ordered by enrollmentDate
+    public List<Enrollment> getEnrollmentsBetween(LocalDate start, LocalDate end) {
+
+        return enrollmentRepository.findByEnrollmentDateBetweenOrderByEnrollmentDate(start, end);
     }
 }

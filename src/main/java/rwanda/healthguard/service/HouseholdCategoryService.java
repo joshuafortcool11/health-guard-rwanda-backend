@@ -66,4 +66,10 @@ public class HouseholdCategoryService {
 
         return householdCategoryRepository.findAll();
     }
+
+    // C3: JPQL IS EMPTY, every household category that no enrollment officer holds
+    public List<HouseholdCategory> getUnusedHouseholdCategories() {
+
+        return householdCategoryRepository.findUnusedHouseholdCategories();
+    }
 }

@@ -1,5 +1,6 @@
 package rwanda.healthguard.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import rwanda.healthguard.domain.Enrollment;
+import rwanda.healthguard.domain.EnrollmentStatus;
 import rwanda.healthguard.service.EnrollmentService;
 import rwanda.healthguard.util.ApiResponses;
 
@@ -80,5 +83,23 @@ public class EnrollmentController {
         }
 
         return ApiResponses.fromMessage(returnedMessage, HttpStatus.OK);
+    }
+
+    // B2: enrollments by status, earliest enrollmentDate first
+    @GetMapping(value = "/api/enrollments/by-status", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Enrollment>> getEnrollmentsByStatus(@RequestParam EnrollmentStatus status) {
+
+        return new ResponseEntity<>(enrollmentService.getEnrollmentsByStatus(status), HttpStatus.OK);
+    }
+
+    // B3: enrollments in a date range, both dates inclusive
+    @GetMapping(value = "/api/enrollments/between", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Enrollment>> getEnrollmentsBetween(@RequestParam String start,
+            @RequestParam String end) {
+
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
+
+        return new ResponseEntity<>(enrollmentService.getEnrollmentsBetween(startDate, endDate), HttpStatus.OK);
     }
 }

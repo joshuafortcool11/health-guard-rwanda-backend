@@ -72,4 +72,10 @@ public class EnrollmentOfficerService {
 
         return enrollmentOfficerRepository.findAll();
     }
+
+    // C1: JPQL, enrollment officers who hold a household category, ignoring letter case
+    public List<EnrollmentOfficer> getEnrollmentOfficersByHouseholdCategory(String name) {
+
+        return enrollmentOfficerRepository.findOfficersByHouseholdCategoryName(name);
+    }
 }

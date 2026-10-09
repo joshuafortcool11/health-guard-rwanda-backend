@@ -81,4 +81,11 @@ public class SectorController {
 
         return ApiResponses.fromMessage(returnedMessage, HttpStatus.OK);
     }
+
+    // C2: every sector that no enrollment officer occupies, sorted by sectorNumber
+    @GetMapping(value = "/api/sectors/free", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Sector>> getFreeSectors() {
+
+        return new ResponseEntity<>(sectorService.getFreeSectors(), HttpStatus.OK);
+    }
 }

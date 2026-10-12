@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,6 +35,19 @@ public class EnrollmentController {
     public ResponseEntity<?> saveEnrollment(@RequestBody Enrollment enrollment) {
 
         String returnedMessage = enrollmentService.saveEnrollment(enrollment);
+
+        if ("Enrollment date cannot be in the past".equals(returnedMessage)) {
+            return ApiResponses.fromMessage(returnedMessage, HttpStatus.BAD_REQUEST);
+        }
+
+        if ("Enrollment officer already processes an enrollment on that date".equals(returnedMessage)) {
+            return ApiResponses.fromMessage(returnedMessage, HttpStatus.CONFLICT);
+        }
+
+        if ("The enrollment officer with that id does not exist".equals(returnedMessage)
+                || "The citizen with that id does not exist".equals(returnedMessage)) {
+            return ApiResponses.fromMessage(returnedMessage, HttpStatus.NOT_FOUND);
+        }
 
         if ("Enrollment saved successfully".equals(returnedMessage)) {
             return ApiResponses.fromMessage(returnedMessage, HttpStatus.CREATED);
@@ -101,5 +115,22 @@ public class EnrollmentController {
         LocalDate endDate = LocalDate.parse(end);
 
         return new ResponseEntity<>(enrollmentService.getEnrollmentsBetween(startDate, endDate), HttpStatus.OK);
+    }
+
+    // D2: status flow, only the allowed moves, COVERED and REJECTED are final
+    @PatchMapping(value = "/api/enrollments/{id}/status", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateEnrollmentStatus(@PathVariable UUID id, @RequestParam EnrollmentStatus status) {
+
+        String returnedMessage = enrollmentService.updateEnrollmentStatus(id, status);
+
+        if ("The enrollment with that id does not exist".equals(returnedMessage)) {
+            return ApiResponses.fromMessage(returnedMessage, HttpStatus.NOT_FOUND);
+        }
+
+        if (returnedMessage.startsWith("Cannot change status from")) {
+            return ApiResponses.fromMessage(returnedMessage, HttpStatus.BAD_REQUEST);
+        }
+
+        return ApiResponses.fromMessage(returnedMessage, HttpStatus.OK);
     }
 }

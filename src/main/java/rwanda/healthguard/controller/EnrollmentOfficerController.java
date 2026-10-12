@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -89,5 +90,47 @@ public class EnrollmentOfficerController {
     public ResponseEntity<List<EnrollmentOfficer>> getEnrollmentOfficersByHouseholdCategory(@RequestParam String name) {
 
         return new ResponseEntity<>(enrollmentOfficerService.getEnrollmentOfficersByHouseholdCategory(name), HttpStatus.OK);
+    }
+
+    // D3: add one household category to an enrollment officer, keep the ones already there
+    @PutMapping(value = "/api/enrollment-officers/{enrollmentOfficerId}/household-categories/{householdCategoryId}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addHouseholdCategoryToEnrollmentOfficer(@PathVariable UUID enrollmentOfficerId,
+            @PathVariable UUID householdCategoryId) {
+
+        String returnedMessage = enrollmentOfficerService
+                .addHouseholdCategoryToEnrollmentOfficer(enrollmentOfficerId, householdCategoryId);
+
+        if ("The enrollment officer with that id does not exist".equals(returnedMessage)
+                || "That household category does not exist".equals(returnedMessage)) {
+            return ApiResponses.fromMessage(returnedMessage, HttpStatus.NOT_FOUND);
+        }
+
+        if ("The enrollment officer already has that household category".equals(returnedMessage)) {
+            return ApiResponses.fromMessage(returnedMessage, HttpStatus.CONFLICT);
+        }
+
+        return ApiResponses.fromMessage(returnedMessage, HttpStatus.OK);
+    }
+
+    // D4: move an enrollment officer to another sector, the old one becomes free
+    @PatchMapping(value = "/api/enrollment-officers/{enrollmentOfficerId}/sector",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> changeEnrollmentOfficerSector(@PathVariable UUID enrollmentOfficerId,
+            @RequestParam int sectorNumber) {
+
+        String returnedMessage = enrollmentOfficerService.changeEnrollmentOfficerSector(enrollmentOfficerId,
+                sectorNumber);
+
+        if ("The enrollment officer with that id does not exist".equals(returnedMessage)
+                || "The sector with that sectorNumber does not exist".equals(returnedMessage)) {
+            return ApiResponses.fromMessage(returnedMessage, HttpStatus.NOT_FOUND);
+        }
+
+        if ("That sector is taken by another enrollment officer".equals(returnedMessage)) {
+            return ApiResponses.fromMessage(returnedMessage, HttpStatus.CONFLICT);
+        }
+
+        return ApiResponses.fromMessage(returnedMessage, HttpStatus.OK);
     }
 }

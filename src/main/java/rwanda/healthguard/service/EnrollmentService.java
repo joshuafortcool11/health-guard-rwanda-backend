@@ -14,6 +14,7 @@ import rwanda.healthguard.domain.Enrollment;
 import rwanda.healthguard.domain.EnrollmentOfficer;
 import rwanda.healthguard.domain.EnrollmentStatus;
 import rwanda.healthguard.repository.CitizenRepository;
+import rwanda.healthguard.repository.CoverageVerificationRepository;
 import rwanda.healthguard.repository.EnrollmentOfficerRepository;
 import rwanda.healthguard.repository.EnrollmentRepository;
 
@@ -28,6 +29,9 @@ public class EnrollmentService {
 
     @Autowired
     private CitizenRepository citizenRepository;
+
+    @Autowired
+    private CoverageVerificationRepository coverageVerificationRepository;
 
     // D1: safe saving, date not in the past, officer free on that date, always starts as APPLIED
     @Transactional
@@ -111,6 +115,11 @@ public class EnrollmentService {
 
         if (existingEnrollment.isEmpty()) {
             return "The enrollment with that id does not exist";
+        }
+
+        // E3: an enrollment that has coverage verifications can no longer be deleted
+        if (coverageVerificationRepository.existsByEnrollment(existingEnrollment.get())) {
+            return "That enrollment has coverage verifications, delete them first";
         }
 
         enrollmentRepository.delete(existingEnrollment.get());

@@ -96,6 +96,10 @@ public class EnrollmentController {
             return ApiResponses.fromMessage(returnedMessage, HttpStatus.NOT_FOUND);
         }
 
+        if ("That enrollment has coverage verifications, delete them first".equals(returnedMessage)) {
+            return ApiResponses.fromMessage(returnedMessage, HttpStatus.CONFLICT);
+        }
+
         return ApiResponses.fromMessage(returnedMessage, HttpStatus.OK);
     }
 

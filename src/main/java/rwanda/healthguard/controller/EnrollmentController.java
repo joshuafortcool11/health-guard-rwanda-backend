@@ -137,4 +137,26 @@ public class EnrollmentController {
 
         return ApiResponses.fromMessage(returnedMessage, HttpStatus.OK);
     }
+
+    // F1: enrollments per status, one row per status with its count
+    @GetMapping(value = "/api/enrollments/stats/by-status", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Object[]>> getEnrollmentStatsByStatus() {
+
+        return new ResponseEntity<>(enrollmentService.getEnrollmentStatsByStatus(), HttpStatus.OK);
+    }
+
+    // F2: enrollment officer is absent, cancel the day in one UPDATE query
+    @PatchMapping(value = "/api/enrollments/cancel-day", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> cancelEnrollmentsOfDay(@RequestParam UUID enrollmentOfficerId,
+            @RequestParam String date) {
+
+        String returnedMessage = enrollmentService.cancelEnrollmentsOfDay(enrollmentOfficerId,
+                LocalDate.parse(date));
+
+        if ("The enrollment officer with that id does not exist".equals(returnedMessage)) {
+            return ApiResponses.fromMessage(returnedMessage, HttpStatus.NOT_FOUND);
+        }
+
+        return ApiResponses.fromMessage(returnedMessage, HttpStatus.OK);
+    }
 }

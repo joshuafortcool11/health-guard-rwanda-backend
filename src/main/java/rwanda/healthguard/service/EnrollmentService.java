@@ -177,4 +177,23 @@ public class EnrollmentService {
 
         return "Enrollment status updated successfully";
     }
+
+    // F1: JPQL GROUP BY, one row per status with its count
+    public List<Object[]> getEnrollmentStatsByStatus() {
+
+        return enrollmentRepository.countEnrollmentsByStatus();
+    }
+
+    // F2: set every enrollment of that enrollment officer on that date to REJECTED, except COVERED ones
+    @Transactional
+    public String cancelEnrollmentsOfDay(UUID enrollmentOfficerId, LocalDate date) {
+
+        if (enrollmentOfficerRepository.findById(enrollmentOfficerId).isEmpty()) {
+            return "The enrollment officer with that id does not exist";
+        }
+
+        int cancelledEnrollments = enrollmentRepository.cancelEnrollmentsOfDay(enrollmentOfficerId, date);
+
+        return cancelledEnrollments + " enrollments cancelled";
+    }
 }

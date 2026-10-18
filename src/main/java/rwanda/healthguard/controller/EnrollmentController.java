@@ -6,6 +6,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -158,5 +162,17 @@ public class EnrollmentController {
         }
 
         return ApiResponses.fromMessage(returnedMessage, HttpStatus.OK);
+    }
+
+    // Bonus: enrollments page by page, Pageable built in the controller
+    @GetMapping(value = "/api/enrollments/page", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<Enrollment>> getEnrollmentsPage(@RequestParam int page, @RequestParam int size,
+            @RequestParam String sort) {
+
+        String[] sortParts = sort.split(",");
+        Sort sortOrder = Sort.by(Sort.Direction.fromString(sortParts[1]), sortParts[0]);
+        Pageable pageable = PageRequest.of(page, size, sortOrder);
+
+        return new ResponseEntity<>(enrollmentService.getEnrollmentsPage(pageable), HttpStatus.OK);
     }
 }

@@ -26,6 +26,11 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, UUID> {
     boolean existsByEnrollmentOfficerAndEnrollmentDateAndStatusNot(EnrollmentOfficer enrollmentOfficer,
             LocalDate enrollmentDate, EnrollmentStatus status);
 
+    // Bonus dashboard: derived count queries
+    long countByEnrollmentDate(LocalDate enrollmentDate);
+
+    long countByStatus(EnrollmentStatus status);
+
     // C4: JPQL DISTINCT with path navigation, each citizen appears once
     @Query("SELECT DISTINCT e.citizen FROM Enrollment e WHERE e.enrollmentOfficer.id = :enrollmentOfficerId")
     List<Citizen> findCitizensOfEnrollmentOfficer(@Param("enrollmentOfficerId") UUID enrollmentOfficerId);

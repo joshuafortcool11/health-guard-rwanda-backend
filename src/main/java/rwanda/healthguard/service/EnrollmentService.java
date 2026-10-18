@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -195,5 +197,11 @@ public class EnrollmentService {
         int cancelledEnrollments = enrollmentRepository.cancelEnrollmentsOfDay(enrollmentOfficerId, date);
 
         return cancelledEnrollments + " enrollments cancelled";
+    }
+
+    // Bonus: enrollments page by page
+    public Page<Enrollment> getEnrollmentsPage(Pageable pageable) {
+
+        return enrollmentRepository.findAll(pageable);
     }
 }

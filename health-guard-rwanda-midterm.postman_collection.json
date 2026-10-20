@@ -1,0 +1,198 @@
+{
+  "info": {
+    "name": "HealthGuard Rwanda Midterm",
+    "description": "Mid-term exam Postman collection for HealthGuard Rwanda. One request per requirement, named by its ID. Variables are prefilled with the seeded data.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8085" },
+    { "key": "citizenId", "value": "d8abb023-e9af-45fc-8853-588f1ff553fb" },
+    { "key": "citizen2Id", "value": "f6f8de10-6d1c-48df-98a7-2c034a22a5c1" },
+    { "key": "citizenNationalId", "value": "1198880123456789" },
+    { "key": "officerId", "value": "2d6bd872-e0c8-4230-a4d1-75db7e30661d" },
+    { "key": "officer2Id", "value": "bd200364-79c4-473c-ba3e-aa1fa68904ae" },
+    { "key": "householdCategoryId", "value": "4db1262d-8834-4e13-8f6d-0835f87e3d1d" },
+    { "key": "enrollmentId", "value": "820b2137-cc53-457c-b95f-410f77abcb1c" },
+    { "key": "coveredEnrollmentId", "value": "ccb3f41a-de0f-46cc-9f43-04d707a813cc" },
+    { "key": "coverageVerificationId", "value": "49b1e01f-b3fb-49f7-a93c-7822e97cb821" },
+    { "key": "unknownId", "value": "00000000-0000-0000-0000-000000000000" }
+  ],
+  "item": [
+    {
+      "name": "A2",
+      "item": [
+        {
+          "name": "A2 - enrollments/all",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/enrollments/all", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "all"] } }
+        },
+        {
+          "name": "A2 - enrollment save 201",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"enrollmentDate\": \"2026-12-15\",\n  \"coverageYear\": 2026,\n  \"premium\": 3000,\n  \"status\": \"COVERED\",\n  \"citizen\": { \"id\": \"{{citizenId}}\" },\n  \"enrollmentOfficer\": { \"id\": \"{{officerId}}\" }\n}" },
+            "url": { "raw": "{{baseUrl}}/api/enrollments/save", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "save"] }
+          }
+        },
+        {
+          "name": "A2 - enrollment by id 200",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/enrollments/{{enrollmentId}}", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "{{enrollmentId}}"] } }
+        },
+        {
+          "name": "A2 - enrollment by id 404",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/enrollments/{{unknownId}}", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "{{unknownId}}"] } }
+        },
+        {
+          "name": "A2 - enrollment update 200",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"enrollmentDate\": \"2026-10-20\",\n  \"coverageYear\": 2026,\n  \"premium\": 4500,\n  \"citizen\": { \"id\": \"{{citizenId}}\" },\n  \"enrollmentOfficer\": { \"id\": \"{{officerId}}\" }\n}" },
+            "url": { "raw": "{{baseUrl}}/api/enrollments/update/{{enrollmentId}}", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "update", "{{enrollmentId}}"] }
+          }
+        },
+        {
+          "name": "A2 - enrollment delete 200",
+          "request": { "method": "DELETE", "header": [], "url": { "raw": "{{baseUrl}}/api/enrollments/delete/{{enrollmentId}}", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "delete", "{{enrollmentId}}"] } }
+        },
+        {
+          "name": "A2 - citizens/all",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/citizens/all", "host": ["{{baseUrl}}"], "path": ["api", "citizens", "all"] } }
+        },
+        {
+          "name": "A2 - citizen save 201",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"Aline\",\n  \"lastName\": \"Mutesi\",\n  \"nationalId\": \"1199000112233445\",\n  \"phone\": \"0788000111\",\n  \"village\": \"Nyagatovu\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/citizens/save", "host": ["{{baseUrl}}"], "path": ["api", "citizens", "save"] }
+          }
+        },
+        {
+          "name": "A2 - sectors/all",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/sectors/all", "host": ["{{baseUrl}}"], "path": ["api", "sectors", "all"] } }
+        },
+        {
+          "name": "A2 - household-categories/all",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/household-categories/all", "host": ["{{baseUrl}}"], "path": ["api", "household-categories", "all"] } }
+        },
+        {
+          "name": "A2 - enrollment-officers/all",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/enrollment-officers/all", "host": ["{{baseUrl}}"], "path": ["api", "enrollment-officers", "all"] } }
+        }
+      ]
+    },
+    {
+      "name": "B1",
+      "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/citizens/by-village?village=nyagatovu", "host": ["{{baseUrl}}"], "path": ["api", "citizens", "by-village"], "query": [{ "key": "village", "value": "nyagatovu" }] } }
+    },
+    {
+      "name": "B2",
+      "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/enrollments/by-status?status=APPLIED", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "by-status"], "query": [{ "key": "status", "value": "APPLIED" }] } }
+    },
+    {
+      "name": "B3",
+      "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/enrollments/between?start=2026-10-01&end=2026-10-31", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "between"], "query": [{ "key": "start", "value": "2026-10-01" }, { "key": "end", "value": "2026-10-31" }] } }
+    },
+    {
+      "name": "C1",
+      "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/enrollment-officers/by-household-category?name=ubudehe 1", "host": ["{{baseUrl}}"], "path": ["api", "enrollment-officers", "by-household-category"], "query": [{ "key": "name", "value": "ubudehe 1" }] } }
+    },
+    {
+      "name": "C2",
+      "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/sectors/free", "host": ["{{baseUrl}}"], "path": ["api", "sectors", "free"] } }
+    },
+    {
+      "name": "C3",
+      "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/household-categories/unused", "host": ["{{baseUrl}}"], "path": ["api", "household-categories", "unused"] } }
+    },
+    {
+      "name": "C4",
+      "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/citizens/of-enrollment-officer/{{officerId}}", "host": ["{{baseUrl}}"], "path": ["api", "citizens", "of-enrollment-officer", "{{officerId}}"] } }
+    },
+    {
+      "name": "C4 - unknown officer 404",
+      "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/citizens/of-enrollment-officer/{{unknownId}}", "host": ["{{baseUrl}}"], "path": ["api", "citizens", "of-enrollment-officer", "{{unknownId}}"] } }
+    },
+    {
+      "name": "D1 - past date 400",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"enrollmentDate\": \"2026-09-01\",\n  \"coverageYear\": 2026,\n  \"premium\": 3000,\n  \"citizen\": { \"id\": \"{{citizenId}}\" },\n  \"enrollmentOfficer\": { \"id\": \"{{officerId}}\" }\n}" },
+        "url": { "raw": "{{baseUrl}}/api/enrollments/save", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "save"] }
+      }
+    },
+    {
+      "name": "D1 - officer busy that day 409",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"enrollmentDate\": \"2026-10-20\",\n  \"coverageYear\": 2026,\n  \"premium\": 3000,\n  \"citizen\": { \"id\": \"{{citizen2Id}}\" },\n  \"enrollmentOfficer\": { \"id\": \"{{officerId}}\" }\n}" },
+        "url": { "raw": "{{baseUrl}}/api/enrollments/save", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "save"] }
+      }
+    },
+    {
+      "name": "D1 - safe save 201",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"enrollmentDate\": \"2026-12-20\",\n  \"coverageYear\": 2026,\n  \"premium\": 3000,\n  \"status\": \"PAYMENT_PENDING\",\n  \"citizen\": { \"id\": \"{{citizenId}}\" },\n  \"enrollmentOfficer\": { \"id\": \"{{officer2Id}}\" }\n}" },
+        "url": { "raw": "{{baseUrl}}/api/enrollments/save", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "save"] }
+      }
+    },
+    {
+      "name": "D2",
+      "request": { "method": "PATCH", "header": [], "url": { "raw": "{{baseUrl}}/api/enrollments/{{enrollmentId}}/status?status=PAYMENT_PENDING", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "{{enrollmentId}}", "status"], "query": [{ "key": "status", "value": "PAYMENT_PENDING" }] } }
+    },
+    {
+      "name": "D2 - forbidden move 400",
+      "request": { "method": "PATCH", "header": [], "url": { "raw": "{{baseUrl}}/api/enrollments/{{coveredEnrollmentId}}/status?status=APPLIED", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "{{coveredEnrollmentId}}", "status"], "query": [{ "key": "status", "value": "APPLIED" }] } }
+    },
+    {
+      "name": "D3",
+      "request": { "method": "PUT", "header": [], "url": { "raw": "{{baseUrl}}/api/enrollment-officers/{{officerId}}/household-categories/{{householdCategoryId}}", "host": ["{{baseUrl}}"], "path": ["api", "enrollment-officers", "{{officerId}}", "household-categories", "{{householdCategoryId}}"] } }
+    },
+    {
+      "name": "D4",
+      "request": { "method": "PATCH", "header": [], "url": { "raw": "{{baseUrl}}/api/enrollment-officers/{{officer2Id}}/sector?sectorNumber=4", "host": ["{{baseUrl}}"], "path": ["api", "enrollment-officers", "{{officer2Id}}", "sector"], "query": [{ "key": "sectorNumber", "value": "4" }] } }
+    },
+    {
+      "name": "E1",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"healthCenter\": \"Kimironko Health Center\",\n  \"remarks\": \"Coverage valid, consultation approved\",\n  \"dependents\": 3\n}" },
+        "url": { "raw": "{{baseUrl}}/api/coverage-verifications/save?enrollmentId={{coveredEnrollmentId}}", "host": ["{{baseUrl}}"], "path": ["api", "coverage-verifications", "save"], "query": [{ "key": "enrollmentId", "value": "{{coveredEnrollmentId}}" }] }
+      }
+    },
+    {
+      "name": "E2",
+      "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/coverage-verifications/citizen/{{citizenNationalId}}", "host": ["{{baseUrl}}"], "path": ["api", "coverage-verifications", "citizen", "{{citizenNationalId}}"] } }
+    },
+    {
+      "name": "E3 - delete verification",
+      "request": { "method": "DELETE", "header": [], "url": { "raw": "{{baseUrl}}/api/coverage-verifications/delete/{{coverageVerificationId}}", "host": ["{{baseUrl}}"], "path": ["api", "coverage-verifications", "delete", "{{coverageVerificationId}}"] } }
+    },
+    {
+      "name": "E3 - enrollment delete protected 409",
+      "request": { "method": "DELETE", "header": [], "url": { "raw": "{{baseUrl}}/api/enrollments/delete/{{coveredEnrollmentId}}", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "delete", "{{coveredEnrollmentId}}"] } }
+    },
+    {
+      "name": "F1",
+      "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/enrollments/stats/by-status", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "stats", "by-status"] } }
+    },
+    {
+      "name": "F2",
+      "request": { "method": "PATCH", "header": [], "url": { "raw": "{{baseUrl}}/api/enrollments/cancel-day?enrollmentOfficerId={{officerId}}&date=2026-10-20", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "cancel-day"], "query": [{ "key": "enrollmentOfficerId", "value": "{{officerId}}" }, { "key": "date", "value": "2026-10-20" }] } }
+    },
+    {
+      "name": "BONUS - dashboard",
+      "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/dashboard/summary", "host": ["{{baseUrl}}"], "path": ["api", "dashboard", "summary"] } }
+    },
+    {
+      "name": "BONUS - enrollments page",
+      "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/enrollments/page?page=0&size=5&sort=enrollmentDate,desc", "host": ["{{baseUrl}}"], "path": ["api", "enrollments", "page"], "query": [{ "key": "page", "value": "0" }, { "key": "size", "value": "5" }, { "key": "sort", "value": "enrollmentDate,desc" }] } }
+    }
+  ]
+}

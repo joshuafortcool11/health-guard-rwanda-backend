@@ -1,0 +1,451 @@
+### Household Categories
+POST http://localhost:8085/api/household-categories/save
+Content-Type: application/json
+
+{
+  "name": "Ubudehe 1"
+}
+
+###
+POST http://localhost:8085/api/household-categories/save
+Content-Type: application/json
+
+{
+  "name": "Ubudehe 2"
+}
+
+###
+POST http://localhost:8085/api/household-categories/save
+Content-Type: application/json
+
+{
+  "name": "Ubudehe 3"
+}
+
+###
+POST http://localhost:8085/api/household-categories/save
+Content-Type: application/json
+
+{
+  "name": "Ubudehe 4"
+}
+
+### Get all household categories
+GET http://localhost:8085/api/household-categories/all
+
+### Sectors
+POST http://localhost:8085/api/sectors/save
+Content-Type: application/json
+
+{
+  "name": "Kacyiru",
+  "sectorNumber": 1
+}
+
+###
+POST http://localhost:8085/api/sectors/save
+Content-Type: application/json
+
+{
+  "name": "Remera",
+  "sectorNumber": 2
+}
+
+###
+POST http://localhost:8085/api/sectors/save
+Content-Type: application/json
+
+{
+  "name": "Gisozi",
+  "sectorNumber": 3
+}
+
+###
+POST http://localhost:8085/api/sectors/save
+Content-Type: application/json
+
+{
+  "name": "Kibagabaga",
+  "sectorNumber": 4
+}
+
+### Get all sectors
+GET http://localhost:8085/api/sectors/all
+
+### Enrollment Officers
+POST http://localhost:8085/api/enrollment-officers/save
+Content-Type: application/json
+
+{
+  "firstName": "Alice",
+  "lastName": "Mukamana",
+  "email": "alice.mukamana@healthguard.rw",
+  "sector": { "id": "PASTE_KACYIRU_ID_HERE" },
+  "householdCategories": [
+    { "id": "PASTE_UBUDEHE1_ID_HERE" },
+    { "id": "PASTE_UBUDEHE2_ID_HERE" }
+  ]
+}
+
+###
+POST http://localhost:8085/api/enrollment-officers/save
+Content-Type: application/json
+
+{
+  "firstName": "Eric",
+  "lastName": "Habimana",
+  "email": "eric.habimana@healthguard.rw",
+  "sector": { "id": "PASTE_REMERA_ID_HERE" },
+  "householdCategories": [
+    { "id": "PASTE_UBUDEHE3_ID_HERE" }
+  ]
+}
+
+###
+POST http://localhost:8085/api/enrollment-officers/save
+Content-Type: application/json
+
+{
+  "firstName": "Diane",
+  "lastName": "Uwase",
+  "email": "diane.uwase@healthguard.rw",
+  "sector": { "id": "PASTE_GISOZI_ID_HERE" },
+  "householdCategories": [
+    { "id": "PASTE_UBUDEHE1_ID_HERE" }
+  ]
+}
+
+### Get all enrollment officers
+GET http://localhost:8085/api/enrollment-officers/all
+
+### Citizens
+POST http://localhost:8085/api/citizens/save
+Content-Type: application/json
+
+{
+  "firstName": "Jean Bosco",
+  "lastName": "Nkurunziza",
+  "nationalId": "1198880123456789",
+  "phone": "0788111222",
+  "village": "Nyagatovu"
+}
+
+###
+POST http://localhost:8085/api/citizens/save
+Content-Type: application/json
+
+{
+  "firstName": "Claudine",
+  "lastName": "Uwimana",
+  "nationalId": "1198770234567890",
+  "phone": "0788222333",
+  "village": "Nyagatovu"
+}
+
+###
+POST http://localhost:8085/api/citizens/save
+Content-Type: application/json
+
+{
+  "firstName": "Emmanuel",
+  "lastName": "Nshuti",
+  "nationalId": "1198660345678901",
+  "phone": "0788333444",
+  "village": "Gatenga"
+}
+
+###
+POST http://localhost:8085/api/citizens/save
+Content-Type: application/json
+
+{
+  "firstName": "Solange",
+  "lastName": "Ingabire",
+  "nationalId": "1198550456789012",
+  "phone": "0788444555",
+  "village": "Kabeza"
+}
+
+###
+POST http://localhost:8085/api/citizens/save
+Content-Type: application/json
+
+{
+  "firstName": "Patrick",
+  "lastName": "Mugisha",
+  "nationalId": "1198440567890123",
+  "phone": "0788555666",
+  "village": "Kimironko"
+}
+
+### Get all citizens
+GET http://localhost:8085/api/citizens/all
+
+### Enrollments
+POST http://localhost:8085/api/enrollments/save
+Content-Type: application/json
+
+{
+  "enrollmentDate": "2026-10-17",
+  "coverageYear": 2026,
+  "premium": 3000,
+  "status": "COVERED",
+  "citizen": { "id": "PASTE_CITIZEN1_ID_HERE" },
+  "enrollmentOfficer": { "id": "PASTE_ALICE_ID_HERE" }
+}
+
+###
+POST http://localhost:8085/api/enrollments/save
+Content-Type: application/json
+
+{
+  "enrollmentDate": "2026-10-18",
+  "coverageYear": 2026,
+  "premium": 3000,
+  "status": "APPLIED",
+  "citizen": { "id": "PASTE_CITIZEN2_ID_HERE" },
+  "enrollmentOfficer": { "id": "PASTE_ALICE_ID_HERE" }
+}
+
+###
+POST http://localhost:8085/api/enrollments/save
+Content-Type: application/json
+
+{
+  "enrollmentDate": "2026-10-19",
+  "coverageYear": 2026,
+  "premium": 3000,
+  "status": "PAYMENT_PENDING",
+  "citizen": { "id": "PASTE_CITIZEN3_ID_HERE" },
+  "enrollmentOfficer": { "id": "PASTE_ERIC_ID_HERE" }
+}
+
+###
+POST http://localhost:8085/api/enrollments/save
+Content-Type: application/json
+
+{
+  "enrollmentDate": "2026-10-20",
+  "coverageYear": 2026,
+  "premium": 3000,
+  "status": "REJECTED",
+  "citizen": { "id": "PASTE_CITIZEN4_ID_HERE" },
+  "enrollmentOfficer": { "id": "PASTE_ALICE_ID_HERE" }
+}
+
+###
+POST http://localhost:8085/api/enrollments/save
+Content-Type: application/json
+
+{
+  "enrollmentDate": "2026-10-20",
+  "coverageYear": 2026,
+  "premium": 3000,
+  "status": "APPLIED",
+  "citizen": { "id": "PASTE_CITIZEN5_ID_HERE" },
+  "enrollmentOfficer": { "id": "PASTE_ALICE_ID_HERE" }
+}
+
+###
+POST http://localhost:8085/api/enrollments/save
+Content-Type: application/json
+
+{
+  "enrollmentDate": "2026-10-25",
+  "coverageYear": 2026,
+  "premium": 3000,
+  "status": "COVERED",
+  "citizen": { "id": "PASTE_CITIZEN1_ID_HERE" },
+  "enrollmentOfficer": { "id": "PASTE_ERIC_ID_HERE" }
+}
+
+###
+POST http://localhost:8085/api/enrollments/save
+Content-Type: application/json
+
+{
+  "enrollmentDate": "2026-11-01",
+  "coverageYear": 2026,
+  "premium": 3000,
+  "status": "PAYMENT_PENDING",
+  "citizen": { "id": "PASTE_CITIZEN2_ID_HERE" },
+  "enrollmentOfficer": { "id": "PASTE_DIANE_ID_HERE" }
+}
+
+###
+POST http://localhost:8085/api/enrollments/save
+Content-Type: application/json
+
+{
+  "enrollmentDate": "2026-11-05",
+  "coverageYear": 2026,
+  "premium": 3000,
+  "status": "APPLIED",
+  "citizen": { "id": "PASTE_CITIZEN3_ID_HERE" },
+  "enrollmentOfficer": { "id": "PASTE_DIANE_ID_HERE" }
+}
+
+###
+POST http://localhost:8085/api/enrollments/save
+Content-Type: application/json
+
+{
+  "enrollmentDate": "2026-11-08",
+  "coverageYear": 2026,
+  "premium": 3000,
+  "status": "REJECTED",
+  "citizen": { "id": "PASTE_CITIZEN4_ID_HERE" },
+  "enrollmentOfficer": { "id": "PASTE_ERIC_ID_HERE" }
+}
+
+###
+POST http://localhost:8085/api/enrollments/save
+Content-Type: application/json
+
+{
+  "enrollmentDate": "2026-11-10",
+  "coverageYear": 2026,
+  "premium": 3000,
+  "status": "APPLIED",
+  "citizen": { "id": "PASTE_CITIZEN5_ID_HERE" },
+  "enrollmentOfficer": { "id": "PASTE_DIANE_ID_HERE" }
+}
+
+### Get all enrollments
+GET http://localhost:8085/api/enrollments/all
+
+### Coverage Verifications
+POST http://localhost:8085/api/coverage-verifications/save?enrollmentId=PASTE_COVERED_ENROLLMENT1_ID_HERE
+Content-Type: application/json
+
+{
+  "healthCenter": "Remera Health Center",
+  "remarks": "Follow up visit covered",
+  "dependents": 3
+}
+
+###
+POST http://localhost:8085/api/coverage-verifications/save?enrollmentId=PASTE_COVERED_ENROLLMENT2_ID_HERE
+Content-Type: application/json
+
+{
+  "healthCenter": "Kimironko Health Center",
+  "remarks": "Coverage valid, consultation approved",
+  "dependents": 2
+}
+
+### Read endpoints
+GET http://localhost:8085/api/household-categories/all
+
+###
+GET http://localhost:8085/api/sectors/all
+
+###
+GET http://localhost:8085/api/enrollment-officers/all
+
+###
+GET http://localhost:8085/api/citizens/all
+
+###
+GET http://localhost:8085/api/enrollments/all
+
+### B1 - citizens in a village (case-insensitive, ordered by last name)
+GET http://localhost:8085/api/citizens/by-village?village=nyagatovu
+
+### B2 - enrollments by status (ordered by date)
+GET http://localhost:8085/api/enrollments/by-status?status=APPLIED
+
+### B3 - enrollments between two dates
+GET http://localhost:8085/api/enrollments/between?start=2026-10-01&end=2026-10-31
+
+### C1 - enrollment officers holding a household category
+GET http://localhost:8085/api/enrollment-officers/by-household-category?name=ubudehe%201
+
+### C2 - sectors without an enrollment officer
+GET http://localhost:8085/api/sectors/free
+
+### C3 - household categories not held by any enrollment officer
+GET http://localhost:8085/api/household-categories/unused
+
+### C4 - distinct citizens of an enrollment officer
+GET http://localhost:8085/api/citizens/of-enrollment-officer/PASTE_ALICE_ID_HERE
+
+### D1 - save with a past date (expect 400)
+POST http://localhost:8085/api/enrollments/save
+Content-Type: application/json
+
+{
+  "enrollmentDate": "2026-09-01",
+  "coverageYear": 2026,
+  "premium": 3000,
+  "citizen": { "id": "PASTE_CITIZEN1_ID_HERE" },
+  "enrollmentOfficer": { "id": "PASTE_ALICE_ID_HERE" }
+}
+
+### D1 - officer already active that day (expect 409)
+POST http://localhost:8085/api/enrollments/save
+Content-Type: application/json
+
+{
+  "enrollmentDate": "2026-10-17",
+  "coverageYear": 2026,
+  "premium": 3000,
+  "citizen": { "id": "PASTE_CITIZEN2_ID_HERE" },
+  "enrollmentOfficer": { "id": "PASTE_ALICE_ID_HERE" }
+}
+
+### D1 - valid save (expect 201)
+POST http://localhost:8085/api/enrollments/save
+Content-Type: application/json
+
+{
+  "enrollmentDate": "2026-12-20",
+  "coverageYear": 2026,
+  "premium": 3000,
+  "status": "PAYMENT_PENDING",
+  "citizen": { "id": "PASTE_CITIZEN1_ID_HERE" },
+  "enrollmentOfficer": { "id": "PASTE_ERIC_ID_HERE" }
+}
+
+### D2 - change status (valid transition)
+PATCH http://localhost:8085/api/enrollments/PASTE_ENROLLMENT_ID_HERE/status?status=PAYMENT_PENDING
+
+### D2 - change status (forbidden transition, expect 400)
+PATCH http://localhost:8085/api/enrollments/PASTE_ENROLLMENT_ID_HERE/status?status=APPLIED
+
+### D3 - assign a household category to an enrollment officer
+PUT http://localhost:8085/api/enrollment-officers/PASTE_ALICE_ID_HERE/household-categories/PASTE_UBUDEHE3_ID_HERE
+
+### D4 - move an enrollment officer to a sector
+PATCH http://localhost:8085/api/enrollment-officers/PASTE_ERIC_ID_HERE/sector?sectorNumber=4
+
+### E1 - add a coverage verification to a COVERED enrollment
+POST http://localhost:8085/api/coverage-verifications/save?enrollmentId=PASTE_COVERED_ENROLLMENT1_ID_HERE
+Content-Type: application/json
+
+{
+  "healthCenter": "Kimironko Health Center",
+  "remarks": "Coverage valid, consultation approved",
+  "dependents": 3
+}
+
+### E2 - coverage verification history of a citizen
+GET http://localhost:8085/api/coverage-verifications/citizen/1198880123456789
+
+### E3 - delete a coverage verification
+DELETE http://localhost:8085/api/coverage-verifications/delete/PASTE_VERIFICATION_ID_HERE
+
+### E3 - delete a COVERED enrollment that has verifications (expect 409)
+DELETE http://localhost:8085/api/enrollments/delete/PASTE_COVERED_ENROLLMENT1_ID_HERE
+
+### F1 - enrollments per status report
+GET http://localhost:8085/api/enrollments/stats/by-status
+
+### F2 - cancel all active enrollments of an officer on a day
+PATCH http://localhost:8085/api/enrollments/cancel-day?enrollmentOfficerId=PASTE_ALICE_ID_HERE&date=2026-10-20
+
+### Bonus - dashboard summary
+GET http://localhost:8085/api/dashboard/summary
+
+### Bonus - paginated enrollments
+GET http://localhost:8085/api/enrollments/page?page=0&size=5&sort=enrollmentDate,desc
